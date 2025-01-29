@@ -14,13 +14,17 @@ class Paddle(t.Turtle):
         
 
     def moveup(self):
-        y = t.ycor()+20
+        y = self.ycor() + 20
+        if y >= 560:
+            y=-560
         self.sety(y)
-        print("up")
+        print("up"+str(y))
     def movedown(self):
-        y=t.ycor() - 20
+        y= self.ycor() - 20
+        if y <= -560:
+            y=560
         self.sety(y)
-        print("down")
+        print("down"+str(y))
 
 
 
@@ -36,8 +40,25 @@ class Paddle(t.Turtle):
     #    self.penup()
     #    self.goto(self.x, self.y)
         
-class Ball():
-    pass
+class Ball(t.Turtle):
+    def __init__(self, position, vector, sped):
+        super().__init__()
+        self.x, self.y = position
+        self.vx, self.vy = vector
+        self.sped = sped
+        self.shape("circle")
+        self.color("yellow")
+        self.shapesize(stretch_wid=1, stretch_len=1)
+        self.speed(0)
+        self.penup()
+        self.goto(self.x, self.y)
+        
+    def update(self):
+        y= self.ycor() + self.vy*self.sped
+        self.sety(y)
+        x= self.xcor() + self.vx*self.sped
+        self.sety(x)
+
 
 class Pong():
     def __init__(self, height, width, title, bgcolor):
@@ -45,7 +66,6 @@ class Pong():
         self.width = width
         self.title = title
         self.bgcolor = bgcolor
-        
         
 
     def run(self):
@@ -55,15 +75,17 @@ class Pong():
         sc.title(self.title)
         ping = Paddle((-400, 0))
         pogn = Paddle((400, 0))
-        sc.listen()
-        sc.onkeypress(ping.moveup(), "Up")
-        sc.onkeypress(ping.movedown(), "Down")
+        bol = Ball((0,0),(10,10),1)
+        sc.onkeypress(ping.moveup, "Up")
+        sc.onkeypress(ping.movedown, "Down")
         #sc.onkeypress(ping.bettermoveup(), "Left")
-        #sc.onkeypress(ping.bettermovedown(), "Right")
-        sc.onkeypress(pogn.moveup(), "w")
-        sc.onkeypress(pogn.movedown(), "s")
+        #t.onkeypress(ping.bettermovedown(), "Right")
+        sc.onkeypress(pogn.movedown, "s")
+        sc.onkeypress(pogn.moveup, "w")
+        bol.update()
         #sc.onkeypress(pogn.bettermoveup(), "a")
         #sc.onkeypress(pogn.bettermovedown(), "d")
+        t.listen()
 
         t.done()
 
