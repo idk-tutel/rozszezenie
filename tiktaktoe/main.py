@@ -1,1 +1,1 @@
-print("cos")
+print("cos i zmiana")
