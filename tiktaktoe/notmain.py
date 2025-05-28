@@ -1,19 +1,23 @@
-board = [[" ", " ", " "],
-         [" ", " ", " "],
-         [" ", " ", " "]]
-def move(x, y, kto):
+import os
+def move(y, x, kto, board):
+    if x.isdigit() and y.isdigit():
+        x = x
+    else: return False
+    x,y=int(x),int(y)
+    if 3 < x or x < 0 or 3 < y or y < 0:
+        return False
     if board[y-1][x-1] == " ":
         board[y-1][x-1] = kto
         return True
     else:
         return False
-def draw():
+def draw(board):
     print(" " + board[0][0] + " | " + board[0][1] + " | " + board[0][2] + " ")
     print("---|---|---")
     print(" " + board[1][0] + " | " + board[1][1] + " | " + board[1][2] + " ")
     print("---|---|---")
     print(" " + board[2][0] + " | " + board[2][1] + " | " + board[2][2] + " ")
-def winning():
+def winning(board):
     for i in board:
         if i[1] == i[2] == i[0] != " ":
             return True
@@ -25,19 +29,30 @@ def winning():
             return True
     return False
 def logic():
+    turn="o"
+    nturn="x"
+    board = [[" ", " ", " "],
+                 [" ", " ", " "],
+                 [" ", " ", " "]]
     for i in range(9):
-        turn="o"
-        draw()
+        
+        os.system("cls")
+        draw(board)
         pc = False
         while pc != True:
             print(turn+"s turn")
-            pc = move(int(input("row")), int(input("column")), turn)
-        if winning():
+            pc = move(input("row"), input("column"), turn, board)
+        if winning(board):
+            os.system("cls")
+            draw(board)
             print(turn + " is cool")
-            break
-        if turn == "o":
-            turn = "x"
-        else: turn = "o"
+            input("New game")
+            logic()
+        nturn, turn = turn, nturn
+        if i == 9:
+            print("draw XD get gud")
+            input("New game")
+            logic()
 
 
 
