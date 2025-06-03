@@ -7,7 +7,7 @@ class Board:
         self.main_set = [[],[],[],[],[],[],[]]
         for i in range(7):
             for j in range(i+1):
-                if j != i:deck[0].inv = True
+                #if j != i:deck[0].inv = True
                 self.main_set[i].append(deck[0])
                 deck.pop(0)
         self.draw_set = deck
@@ -33,6 +33,8 @@ class Board:
         print("/  ●  \\\\", end="")
         if self.draw_set[0].red:
             print(Fore.RED, end="")
+        if self.selectedrow == -2:
+            print(Fore.YELLOW, end="")
         print("  / "+self.draw_set[0].printcard()+" \          "+Fore.RED+"/  "+self.order[self.finish_set[0]]+"  \  /  "+self.order[self.finish_set[1]]+"  \ "+Style.RESET_ALL+" /  "+self.order[self.finish_set[2]]+"  \  /  "+self.order[self.finish_set[3]]+"  \ ")
         for i in range(2):
             print("|     ||", end="")
@@ -84,8 +86,8 @@ class Board:
                 elif self.main_set[i][m].inv:
                     print(Style.RESET_ALL + "/  ●  \  ", end="")
                     continue
-                elif len(self.main_set[i]):
-                    print(Fore.RED + "/ " + self.main_set[i][m].printcard() + " \  ", end="")
+                elif len(self.main_set[i]) - m <= self.selectednum and i == self.selectedrow-1:
+                    print(Fore.YELLOW + "/ " + self.main_set[i][m].printcard() + " \  ", end="")
                     continue
                 elif self.main_set[i][m].red:
                     print(Fore.RED + "/ "+self.main_set[i][m].printcard()+" \  ", end="")
@@ -124,8 +126,9 @@ class Board:
     def up(self):
         if self.cursor == -1:
             self.draw_cycle()
-        elif self.cursor <= -3 and self.selectednum == 1:
-            pass
+        elif self.cursor == -2:
+            self.selectedrow = -2
+            self.selectednum = 1
         elif self.cursor == self.selectedrow and self.cursor > 0:
             if len(self.main_set[self.cursor-1]) == self.selectednum:
                 self.selectednum = 0
@@ -159,6 +162,15 @@ class Board:
             self.cursor += 1
         elif self.cursor < 0 and self.cursor - 1 != -7:
             self.cursor -= 1
+
+    def space(self):
+        if self.cursor == -1:
+            self.draw_cycle()
+        elif self.cursor > 0:
+            for i in range(self.selectednum):
+                if self.selectedrow == -2:
+                    self.main_set[self.cursor-1].append(self.draw_set[0])
+                    self.draw_set.pop(0)
 
 
 

@@ -39,6 +39,11 @@ if __name__ == '__main__':
         gboard.print_self()
         print("right")
 
+    def space():
+        os.system("cls")
+        gboard.space()
+        gboard.print_self()
+        print("space")
 
     helpers.shuffle(deck)
     gboard = board.Board(deck)
@@ -48,4 +53,5 @@ if __name__ == '__main__':
     keyboard.add_hotkey("s", down)
     keyboard.add_hotkey("a", left)
     keyboard.add_hotkey("d", right)
+    keyboard.add_hotkey("space", space)
     keyboard.wait("esc")
