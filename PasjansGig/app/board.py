@@ -31,11 +31,15 @@ class Board:
             print(Fore.RED, end="")
         print(" _____           "+Fore.RED+" _____    _____  "+Style.RESET_ALL+"  _____    _____ ")
         print("/  ●  \\\\", end="")
-        if self.draw_set[0].red:
-            print(Fore.RED, end="")
-        if self.selectedrow == -2:
-            print(Fore.YELLOW, end="")
-        print("  / "+self.draw_set[0].printcard()+" \          "+Fore.RED+"/  "+self.order[self.finish_set[0]]+"  \  /  "+self.order[self.finish_set[1]]+"  \ "+Style.RESET_ALL+" /  "+self.order[self.finish_set[2]]+"  \  /  "+self.order[self.finish_set[3]]+"  \ ")
+        if len(self.draw_set) > 0:
+            if self.draw_set[0].red:
+                print(Fore.RED, end="")
+            if self.selectedrow == -2:
+                print(Fore.YELLOW, end="")
+            print("  / "+self.draw_set[0].printcard()+" \          ",end="")
+        else:
+            print("  / nic \          ",end="")
+        print(+Fore.RED+"/  "+self.order[self.finish_set[0]]+"  \  /  "+self.order[self.finish_set[1]]+"  \ "+Style.RESET_ALL+" /  "+self.order[self.finish_set[2]]+"  \  /  "+self.order[self.finish_set[3]]+"  \ ")
         for i in range(2):
             print("|     ||", end="")
             if self.draw_set[0].red:
