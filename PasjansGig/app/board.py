@@ -39,7 +39,7 @@ class Board:
             print("  / "+self.draw_set[0].printcard()+" \          ",end="")
         else:
             print("  / nic \          ",end="")
-        print(+Fore.RED+"/  "+self.order[self.finish_set[0]]+"  \  /  "+self.order[self.finish_set[1]]+"  \ "+Style.RESET_ALL+" /  "+self.order[self.finish_set[2]]+"  \  /  "+self.order[self.finish_set[3]]+"  \ ")
+        print(Fore.RED+"/  "+str(self.order[self.finish_set[0]])+"  \  /  "+str(self.order[self.finish_set[1]])+"  \ "+Style.RESET_ALL+" /  "+str(self.order[self.finish_set[2]])+"  \  /  "+str(self.order[self.finish_set[3]])+"  \ ")
         for i in range(2):
             print("|     ||", end="")
             if self.draw_set[0].red:
@@ -74,8 +74,8 @@ class Board:
                 print(Fore.RED + " _____   ", end="")
         print("\n", end="")
         for m in range(max(len(self.main_set[0]),len(self.main_set[1]),len(self.main_set[2]),len(self.main_set[3]),len(self.main_set[4]),len(self.main_set[5]),len(self.main_set[6]))+2):
-            for i in range(7):
-                if len(self.main_set[i]) == m - 1 and self.cursor == m-1:
+            for i in range(7):#pierwsze cos to z symbolami
+                if len(self.main_set[i]) == m - 1 and self.cursor == i+1:
                     print(Fore.YELLOW + "=======  ", end="")
                     continue
                 if len(self.main_set[i]) <= m - 1:
@@ -99,7 +99,7 @@ class Board:
                 else:
                     print(Style.RESET_ALL + "/ "+self.main_set[i][m].printcard()+" \  ", end="")
             print("\n", end="")
-            for i in range(7):
+            for i in range(7):#drogie to z resztą karty
 
                 if len(self.main_set[i]) <= m - 1:
                     print("         ", end="")
